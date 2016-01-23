@@ -28,9 +28,9 @@ class SmartImageField extends InputWidget
             $imagePath = $this->value;
             $this->createFileInputId($this->name);
         }
+        $this->registerClientScript();
         $this->renderImagePreview($imagePath);
         $this->renderFileInput();
-        $this->registerClientScript();
     }
     protected function registerClientScript()
     {
