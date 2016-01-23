@@ -37,23 +37,21 @@ class SmartImageField extends InputWidget
         $view = $this->getView();
         $this->asset = SmartImageFieldAsset::register($view);
         $js = <<<EOT
-        $(function(){
-            $('#$this->fileInputId').change(function(){
-                var file = this.files[0];
-                $.ajax({
-                    url: "$this->uploadsHandler",
-                    type: "POST",
-                    data: {
-                        file: file
-                    },
-                    contentType: false,
-                    cache: false,
-                    processData:false,
-                    success: function(data)
-                    {
-                        console.log(data);
-                    }
-                });
+        $('#$this->fileInputId').change(function(){
+            var file = this.files[0];
+            $.ajax({
+                url: "$this->uploadsHandler",
+                type: "POST",
+                data: {
+                    file: file
+                },
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function(data)
+                {
+                    console.log(data);
+                }
             });
         });
 EOT;

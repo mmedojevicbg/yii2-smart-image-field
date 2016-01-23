@@ -5,6 +5,7 @@ use yii\helpers\Json;
 
 class ImageUploadAction extends Action
 {
+    public $uploadsPath;
     public function run()
     {
         $sourcePath = $_FILES['file']['tmp_name'];
