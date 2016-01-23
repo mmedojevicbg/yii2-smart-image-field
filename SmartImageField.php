@@ -60,6 +60,7 @@ class SmartImageField extends InputWidget
                 processData:false,
                 success: function(data)
                 {
+                    data = jQuery.parseJSON(data);
                     $('#$this->imagePreviewId').attr('src', data.filename);
                 }
             });
