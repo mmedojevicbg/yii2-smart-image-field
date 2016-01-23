@@ -12,7 +12,7 @@ class SmartImageField extends InputWidget
     protected $asset;
     protected $fileInputId;
     protected $fileInputClass;
-    protected $uploadsHandler;
+    public $uploadsHandler;
     public function init()
     {
         parent::init();
