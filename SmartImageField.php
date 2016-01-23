@@ -11,6 +11,8 @@ class SmartImageField extends InputWidget
      */
     protected $asset;
     protected $fileInputId;
+    protected $fileInputClass;
+    protected $uploadsHandler;
     public function init()
     {
         parent::init();
@@ -34,6 +36,28 @@ class SmartImageField extends InputWidget
     {
         $view = $this->getView();
         $this->asset = SmartImageFieldAsset::register($view);
+        $js = <<<EOT
+        $(function(){
+            $('#$this->fileInputId').change(function(){
+                var file = this.files[0];
+                $.ajax({
+                    url: "$this->uploadsHandler",
+                    type: "POST",
+                    data: {
+                        file: file
+                    },
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    success: function(data)
+                    {
+                        console.log(data);
+                    }
+                });
+            });
+        });
+EOT;
+        $view->registerJs($js);
     }
     protected function renderImagePreview($imagePath)
     {
@@ -45,9 +69,12 @@ class SmartImageField extends InputWidget
         echo Html::endTag('div');
     }
     protected function renderFileInput() {
-        echo Html::fileInput($this->fileInputId);
+        echo Html::fileInput($this->fileInputId, null, ['class' => $this->createFileInputClass()]);
     }
     protected function createFileInputId($fieldName) {
         $this->fileInputId = 'smart-image-field-fileinput-' . $fieldName;
+    }
+    protected function createFileInputClass() {
+        $this->fileInputClass = 'smart-image-field-fileinput';
     }
 }
