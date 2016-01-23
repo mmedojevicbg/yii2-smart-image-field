@@ -39,10 +39,12 @@ class SmartImageField extends InputWidget
         $js = <<<EOT
         $('#$this->fileInputId').change(function(){
             var file = this.files[0];
+            var formData=new FormData();
+            formData.append("file", file);
             $.ajax({
                 url: "$this->uploadsHandler",
                 type: "POST",
-                data: "file="+file,
+                data: formData,
                 contentType: false,
                 cache: false,
                 processData:false,
