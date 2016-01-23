@@ -23,6 +23,9 @@ class SmartImageField extends InputWidget
         } else {
             $this->fieldName = $this->name;
         }
+        $this->createImagePreviewId();
+        $this->createFileInputClass();
+        $this->createFileInputId();
     }
     public function run()
     {
@@ -71,20 +74,20 @@ EOT;
             $imagePath = $this->asset->baseUrl . '/no-image.png';
         }
         echo Html::img($imagePath, ['style' => 'width: 200px; height: 200px;',
-                                    'id' => $this->createImagePreviewId($this->fieldName)]);
+                                    'id' => $this->imagePreviewId]);
         echo Html::endTag('div');
     }
     protected function renderFileInput() {
-        echo Html::fileInput($this->fileInputId, null, ['class' => $this->createFileInputClass(),
+        echo Html::fileInput($this->fileInputId, null, ['class' => $this->fileInputClass,
                                                         'id' => $this->fileInputId]);
     }
-    protected function createFileInputId($fieldName) {
-        return $this->fileInputId = 'smart-image-field-fileinput-' . $fieldName;
+    protected function createFileInputId() {
+        return $this->fileInputId = 'smart-image-field-fileinput-' . $this->fieldName;
     }
     protected function createFileInputClass() {
         return $this->fileInputClass = 'smart-image-field-fileinput';
     }
-    protected function createImagePreviewId($fieldName) {
-        return $this->imagePreviewId = 'smart-image-field-preview-' . $fieldName;
+    protected function createImagePreviewId() {
+        return $this->imagePreviewId = 'smart-image-field-preview-' . $this->fieldName;
     }
 }
