@@ -69,7 +69,8 @@ EOT;
         echo Html::endTag('div');
     }
     protected function renderFileInput() {
-        echo Html::fileInput($this->fileInputId, null, ['class' => $this->createFileInputClass()]);
+        echo Html::fileInput($this->fileInputId, null, ['class' => $this->createFileInputClass(),
+                                                        'id' => $this->createFileInputClass()]);
     }
     protected function createFileInputId($fieldName) {
         $this->fileInputId = 'smart-image-field-fileinput-' . $fieldName;
