@@ -12,22 +12,29 @@ class SmartImageField extends InputWidget
     protected $asset;
     protected $fileInputId;
     protected $fileInputClass;
+    protected $imagePreviewId;
+    protected $fieldName;
     public $uploadsHandler;
     public function init()
     {
         parent::init();
+        if ($this->hasModel()) {
+            $this->fieldName = $this->attribute;
+        } else {
+            $this->fieldName = $this->name;
+        }
     }
     public function run()
     {
         if ($this->hasModel()) {
             echo Html::activeHiddenInput($this->model, $this->attribute, $this->options);
             $imagePath = $this->model->{$this->attribute};
-            $this->createFileInputId($this->attribute);
+
         } else {
             echo Html::hiddenInput($this->name, $this->value, $this->options);
             $imagePath = $this->value;
-            $this->createFileInputId($this->name);
         }
+        $this->createFileInputId($this->fieldName);
         $this->registerClientScript();
         $this->renderImagePreview($imagePath);
         $this->renderFileInput();
@@ -50,7 +57,7 @@ class SmartImageField extends InputWidget
                 processData:false,
                 success: function(data)
                 {
-                    console.log(data);
+                    $('#$this->imagePreviewId').attr('src', data.filename);
                 }
             });
         });
@@ -63,7 +70,8 @@ EOT;
         if(!$imagePath) {
             $imagePath = $this->asset->baseUrl . '/no-image.png';
         }
-        echo Html::img($imagePath, ['style' => 'width: 200px; height: 200px;']);
+        echo Html::img($imagePath, ['style' => 'width: 200px; height: 200px;',
+                                    'id' => $this->createImagePreviewId($this->fieldName)]);
         echo Html::endTag('div');
     }
     protected function renderFileInput() {
@@ -75,5 +83,8 @@ EOT;
     }
     protected function createFileInputClass() {
         return $this->fileInputClass = 'smart-image-field-fileinput';
+    }
+    protected function createImagePreviewId($fieldName) {
+        return $this->imagePreviewId = 'smart-image-field-preview-' . $fieldName;
     }
 }
