@@ -19,7 +19,6 @@ class SmartImageField extends InputWidget
     }
     public function run()
     {
-        $this->registerClientScript();
         if ($this->hasModel()) {
             echo Html::activeHiddenInput($this->model, $this->attribute, $this->options);
             $imagePath = $this->model->{$this->attribute};
@@ -31,6 +30,7 @@ class SmartImageField extends InputWidget
         }
         $this->renderImagePreview($imagePath);
         $this->renderFileInput();
+        $this->registerClientScript();
     }
     protected function registerClientScript()
     {
