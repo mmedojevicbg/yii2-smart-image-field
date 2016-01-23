@@ -42,9 +42,7 @@ class SmartImageField extends InputWidget
             $.ajax({
                 url: "$this->uploadsHandler",
                 type: "POST",
-                data: {
-                    file: file
-                },
+                data: "file="+file,
                 contentType: false,
                 cache: false,
                 processData:false,
