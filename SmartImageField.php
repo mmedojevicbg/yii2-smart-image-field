@@ -73,9 +73,9 @@ EOT;
                                                         'id' => $this->createFileInputClass()]);
     }
     protected function createFileInputId($fieldName) {
-        $this->fileInputId = 'smart-image-field-fileinput-' . $fieldName;
+        return $this->fileInputId = 'smart-image-field-fileinput-' . $fieldName;
     }
     protected function createFileInputClass() {
-        $this->fileInputClass = 'smart-image-field-fileinput';
+        return $this->fileInputClass = 'smart-image-field-fileinput';
     }
 }
