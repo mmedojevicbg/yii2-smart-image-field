@@ -14,6 +14,7 @@ class SmartImageField extends InputWidget
     protected $fileInputClass;
     protected $imagePreviewId;
     protected $fieldName;
+    protected $hiddenId;
     public $uploadsHandler;
     public function init()
     {
@@ -26,13 +27,14 @@ class SmartImageField extends InputWidget
         $this->createImagePreviewId();
         $this->createFileInputClass();
         $this->createFileInputId();
+        $this->createHiddenId();
     }
     public function run()
     {
+        $this->options['id'] = $this->hiddenId;
         if ($this->hasModel()) {
             echo Html::activeHiddenInput($this->model, $this->attribute, $this->options);
             $imagePath = $this->model->{$this->attribute};
-
         } else {
             echo Html::hiddenInput($this->name, $this->value, $this->options);
             $imagePath = $this->value;
@@ -62,6 +64,7 @@ class SmartImageField extends InputWidget
                 {
                     data = jQuery.parseJSON(data);
                     $('#$this->imagePreviewId').attr('src', data.filename);
+                    $('#$this->imagePreviewId').attr('src', data.filename);
                 }
             });
         });
@@ -90,5 +93,8 @@ EOT;
     }
     protected function createImagePreviewId() {
         return $this->imagePreviewId = 'smart-image-field-preview-' . $this->fieldName;
+    }
+    protected function createHiddenId() {
+        return $this->hiddenId = 'smart-image-field-hidden-' . $this->fieldName;
     }
 }
