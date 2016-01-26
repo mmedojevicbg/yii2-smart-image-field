@@ -49,10 +49,14 @@ class SmartImageField extends InputWidget
         $view = $this->getView();
         $this->asset = SmartImageFieldAsset::register($view);
         $js = <<<EOT
+        if(!$(".sif-modal").size()) {
+          $('body').append('<div class="sif-modal"></div>');
+        }
         $('#$this->fileInputId').change(function(){
             var file = this.files[0];
             var formData=new FormData();
             formData.append("file", file);
+            $('body').addClass("sif-loading");
             $.ajax({
                 url: "$this->uploadsHandler",
                 type: "POST",
@@ -65,11 +69,21 @@ class SmartImageField extends InputWidget
                     data = jQuery.parseJSON(data);
                     $('#$this->imagePreviewId').attr('src', data.filename);
                     $('#$this->hiddenId').val(data.filename);
+                    $('body').removeClass("sif-loading");
                 }
             });
         });
 EOT;
         $view->registerJs($js);
+        $css = <<<EOT
+        .sif-modal {
+            background: rgba( 255, 255, 255, .8 )
+            url('{$this->asset->baseUrl}/ajax-loader.gif';')
+            50% 50%
+            no-repeat;
+        }
+EOT;
+        $view->registerCss($css);
     }
     protected function renderImagePreview($imagePath)
     {
