@@ -78,7 +78,7 @@ EOT;
         $css = <<<EOT
         .sif-modal {
             background: rgba( 255, 255, 255, .8 )
-            url('{$this->asset->baseUrl}/ajax-loader.gif';')
+            url('{$this->asset->baseUrl}/ajax-loader.gif')
             50% 50%
             no-repeat;
         }
