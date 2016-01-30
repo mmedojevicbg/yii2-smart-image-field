@@ -13,3 +13,16 @@ body.sif-loading {
 body.sif-loading .sif-modal {
     display: block;
 }
+.smart-image-field-container {
+    display: table-cell;
+    width: 200px;
+    height: 200px;
+    vertical-align: middle;
+    text-align: center;
+    background-color: gray;
+}
+.smart-image-preview {
+    display: inline-block;
+    max-width: 200px;
+    max-height: 200px;
+}

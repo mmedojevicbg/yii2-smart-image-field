@@ -91,7 +91,7 @@ EOT;
         if(!$imagePath) {
             $imagePath = $this->asset->baseUrl . '/no-image.png';
         }
-        echo Html::img($imagePath, ['style' => 'max-width: 200px; max-height: 200px;',
+        echo Html::img($imagePath, ['class' => 'smart-image-preview',
                                     'id' => $this->imagePreviewId]);
         echo Html::endTag('div');
     }
