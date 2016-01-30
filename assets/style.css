@@ -32,4 +32,6 @@ body.sif-loading .sif-modal {
     right: 5px;
     width: 40px;
     height: 40px;
+    position: absolute;
+    background-image: url(delete.png);
 }
