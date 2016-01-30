@@ -79,11 +79,11 @@ class SmartImageField extends InputWidget
                     if(data.status) {
                         $('#$this->imagePreviewId').attr('src', data.filename);
                         $('#$this->hiddenId').val(data.filename);
-                        $('body').removeClass("sif-loading");
                         $('#$this->removeLinkId').show();
                     } else {
                         alert(data.message);
                     }
+                    $('body').removeClass("sif-loading");
                 }
             });
         });
