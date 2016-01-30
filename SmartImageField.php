@@ -76,10 +76,14 @@ class SmartImageField extends InputWidget
                 success: function(data)
                 {
                     data = jQuery.parseJSON(data);
-                    $('#$this->imagePreviewId').attr('src', data.filename);
-                    $('#$this->hiddenId').val(data.filename);
-                    $('body').removeClass("sif-loading");
-                    $('#$this->removeLinkId').show();
+                    if(data.status) {
+                        $('#$this->imagePreviewId').attr('src', data.filename);
+                        $('#$this->hiddenId').val(data.filename);
+                        $('body').removeClass("sif-loading");
+                        $('#$this->removeLinkId').show();
+                    } else {
+                        alert(data.message);
+                    }
                 }
             });
         });
