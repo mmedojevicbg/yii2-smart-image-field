@@ -15,6 +15,8 @@ class SmartImageField extends InputWidget
     protected $imagePreviewId;
     protected $fieldName;
     protected $hiddenId;
+    protected $removeLinkId;
+    protected $noImagePath;
     public $uploadsHandler;
     public function init()
     {
@@ -28,6 +30,8 @@ class SmartImageField extends InputWidget
         $this->createFileInputClass();
         $this->createFileInputId();
         $this->createHiddenId();
+        $this->createRemoveLinkId();
+        $this->noImagePath = $this->asset->baseUrl . '/no-image.png';
     }
     public function run()
     {
@@ -52,6 +56,11 @@ class SmartImageField extends InputWidget
         if(!$(".sif-modal").size()) {
           $('body').append('<div class="sif-modal"></div>');
         }
+        if($('#$this->hiddenId').val()) {
+            $('#$this->removeLinkId').show();
+        } else {
+            $('#$this->removeLinkId').hide();
+        }
         $('#$this->fileInputId').change(function(){
             var file = this.files[0];
             var formData=new FormData();
@@ -70,8 +79,15 @@ class SmartImageField extends InputWidget
                     $('#$this->imagePreviewId').attr('src', data.filename);
                     $('#$this->hiddenId').val(data.filename);
                     $('body').removeClass("sif-loading");
+                    $('#$this->removeLinkId').show();
                 }
             });
+        });
+        $('#$this->removeLinkId').click(function(){
+            $('#$this->hiddenId').val("");
+            $('#$this->removeLinkId').hide();
+            $('#$this->imagePreviewId').attr('src', '$this->noImagePath');
+            $('#$this->fileInputId').val('');
         });
 EOT;
         $view->registerJs($js);
@@ -88,8 +104,11 @@ EOT;
     protected function renderImagePreview($imagePath)
     {
         echo Html::beginTag('div', ['class' => 'smart-image-field-container']);
+        echo Html::beginTag('div', ['class' => 'smart-image-delete',
+                                    'id' => $this->removeLinkId]);
+        echo Html::endTag('div');
         if(!$imagePath) {
-            $imagePath = $this->asset->baseUrl . '/no-image.png';
+            $imagePath = $this->noImagePath;
         }
         echo Html::img($imagePath, ['class' => 'smart-image-preview',
                                     'id' => $this->imagePreviewId]);
@@ -110,5 +129,8 @@ EOT;
     }
     protected function createHiddenId() {
         return $this->hiddenId = 'smart-image-field-hidden-' . $this->fieldName;
+    }
+    protected function createRemoveLinkId() {
+        return $this->removeLinkId = 'smart-image-delete-' . $this->fieldName;
     }
 }

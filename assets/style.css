@@ -20,9 +20,16 @@ body.sif-loading .sif-modal {
     vertical-align: middle;
     text-align: center;
     background-color: gray;
+    position: relative;
 }
 .smart-image-preview {
     display: inline-block;
     max-width: 200px;
     max-height: 200px;
+}
+.smart-image-delete {
+    top: 5px;
+    right: 5px;
+    width: 40px;
+    height: 40px;
 }
