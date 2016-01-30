@@ -31,7 +31,6 @@ class SmartImageField extends InputWidget
         $this->createFileInputId();
         $this->createHiddenId();
         $this->createRemoveLinkId();
-        $this->noImagePath = $this->asset->baseUrl . '/no-image.png';
     }
     public function run()
     {
@@ -52,6 +51,7 @@ class SmartImageField extends InputWidget
     {
         $view = $this->getView();
         $this->asset = SmartImageFieldAsset::register($view);
+        $this->noImagePath = $this->asset->baseUrl . '/no-image.png';
         $js = <<<EOT
         if(!$(".sif-modal").size()) {
           $('body').append('<div class="sif-modal"></div>');
